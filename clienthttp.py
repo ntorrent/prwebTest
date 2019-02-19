@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding. utf-8 -*-
 
 from urllib.request import urlopen  # em permet treballar una url com si fos un fitxer (estil open())
@@ -19,6 +19,12 @@ class ClientWeb(object):
     def buscar_activitats(self, html):
         arbre = bs4.BeautifulSoup(html, features="lxml")
         activitats = arbre.find_all("div", "featured-links-item")
+        activity_list = []
+        for activity in activitats:
+            title = activity.find("span", "flink-title")		    
+            link = activity.find("a")
+            activity_list.append((title.text, link["href"]))
+
         return activitats
 
     def run(self):
